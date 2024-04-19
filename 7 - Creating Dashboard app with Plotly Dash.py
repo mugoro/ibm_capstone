@@ -14,11 +14,12 @@ min_payload = spacex_df['Payload Mass (kg)'].min()
 # Create a dash application
 app = dash.Dash(__name__)
 
-
 #create an app layout
 app.layout=html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
                              style={'textAlign':'center', 'color':'#503D36','font-size':40}),
+                              
                               # TASK 1: Add a dropdown list to enable Launch Site selection
+                             
                               dcc.Dropdown(id='site-dropdown',
                                            options=[
                                                {'label':'All Sites', 'value':'All'},
@@ -35,6 +36,7 @@ app.layout=html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
 
                                 # TASK 2: Add a pie chart to show the total successful launches count for all sites
                                 # If a specific launch site was selected, show the Success vs. Failed counts for the site
+                               
                                 html.Div(dcc.Graph(id='success-pie-chart')),
                                 html.Br(),
 
@@ -54,11 +56,13 @@ app.layout=html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
                                 }),
 
                                 # TASK 4: Add a scatter chart to show the correlation between payload and launch success
+                                
                                 html.Div(dcc.Graph(id='success-payload-scatter-chart')),
                                 ])
- #TASK 2: Add a callback function to render success-pie-chart based on selected site dropdown
 
+#TASK 2: Add a callback function to render success-pie-chart based on selected site dropdown
 # Function decorator to specify function input and output
+
 @app.callback(Output(component_id='success-pie-chart', component_property='figure'),
               Input(component_id='site-dropdown', component_property='value'))
 def get_pie(value):
@@ -74,11 +78,9 @@ def get_pie(value):
         fig = px.pie(filtered_df,values='class count', names='class', title=title)
         return fig
 
-#TASK 3: Add a Range Slider to Select Payload
-                              
-         
 
 #TASK 4: Add a callback function to render the success-payload-scatter-chart scatter plot    
+
 @app.callback(Output(component_id='success-payload-scatter-chart', component_property='figure'),
               [Input(component_id='site-dropdown', component_property='value'),
                Input(component_id='payload-slider', component_property='value')])
@@ -92,11 +94,8 @@ def get_scatter_chart(selected_site, payload_range):
     df_mask = df[(df['Payload Mass (kg)'] >= low) & (df['Payload Mass (kg)'] <= high)]
 
     fig = px.scatter(df_mask, x='Payload Mass (kg)', y='class', color='Booster Version Category',
-                     title='Correlation between Payload and Success')
-    
+                     title='Correlation between Payload and Success')    
     return fig           
 
-                            
-                              
 if __name__ == '__main__':
     app.run_server(port = 8090)                                                                  
