@@ -1,5 +1,5 @@
 # IBM capstone project repo
-This repo demonstrates curiousdata's data science skills.
+This repo demonstrates FLorin Stanciu's data science skills.
 
 It holds all labs related to a capstone project, a grand finale of a 10-course IBM Data Science specialization.
 
